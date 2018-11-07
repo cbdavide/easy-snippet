@@ -11,7 +11,14 @@ Usage:
 """
 
 from docopt import docopt
+from github import query
+
+import conf
 
 if __name__ == '__main__':
-    arguments = docopt(__doc__)
-    print(arguments)
+    # arguments = docopt(__doc__)
+    url = 'https://api.github.com/repos/SuprDewd/CompetitiveProgramming/contents'
+    auth = (conf.USER, conf.PRIVATE_TOKEN)
+    tr = query.beautiful_tree(url, auth)
+    for t in tr:
+        print( t )
