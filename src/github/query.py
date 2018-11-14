@@ -1,3 +1,4 @@
+import re
 import requests
 
 PIPE = '|'
@@ -42,8 +43,13 @@ def tree(repository_url, callback, level, limit, auth=None):
 def beautiful_tree(repository_url, auth=None, limit=MAX_DEPTH_LEVEL):
     return tree(repository_url, beautify, 0, limit, auth=auth)
 
-if __name__ == '__main__':
-    url = 'https://api.github.com/repos/SuprDewd/CompetitiveProgramming/contents'
-    tr = tree(url, beautify)
-    for t in tr:
-        print( t )
+def search(file_generator, pattern):
+
+    regex = re.compile(pattern)
+
+    for file in file_generator:
+        print(10 * "*")
+
+        result = regex.finditer( file )
+        for r in result:
+            print( bool( r ), r )
