@@ -48,16 +48,18 @@ def beautiful_tree(repository_url, auth=None, limit=MAX_DEPTH_LEVEL):
 def raw_tree(repository_url, auth=None, limit=MAX_DEPTH_LEVEL):
     return tree(repository_url, identity, 0, limit, auth=auth)
 
-def search(file_generator, pattern):
+def search(file_generator, pattern, options=[]):
+
+    if not 'e' in options:
+        pattern = re.escape(pattern)
 
     regex = re.compile(pattern)
 
     for file in file_generator:
-        if not regex.search( file ):
+        if not regex.search(file):
             continue
 
-        result = regex.finditer( file )
-
+        result = regex.finditer(file)
         prev = 0
         word, colored = file, ''
 
@@ -66,7 +68,7 @@ def search(file_generator, pattern):
             if r.start() > prev:
                 colored += word[prev : r.start()]
 
-            colored += colors.red( word[r.start() : r.end()] )
+            colored += colors.red(word[r.start() : r.end()])
             prev = r.end()
 
         colored += word[prev : ]
