@@ -1,8 +1,17 @@
+
+from entity import Repository
 from decorators import get
 
-@get('SELECT * FROM repository')
-def get_repositories(repostories):
-    print(repostories)
+class RepositoryDao:
+
+    @classmethod
+    @get('SELECT * FROM repository')
+    def get_repositories(self, repostories):
+        for repository in repostories:
+            yield Repository(repository[0], repository[1])
+
 
 if __name__ == '__main__':
-    get_repositories()
+
+    for r in RepositoryDao.get_repositories():
+        print(r)
