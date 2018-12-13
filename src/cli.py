@@ -20,8 +20,13 @@ if __name__ == '__main__':
     url = 'https://api.github.com/repos/SuprDewd/CompetitiveProgramming/contents'
     auth = (conf.USER, conf.PRIVATE_TOKEN)
 
-    test = ['perrito', 'asdasperrito asdasd perritodf', 'hamburguesaper']
-    # tr = query.beautiful_tree( url, auth )
-    query.search( test, 'perrito' )
-    # for t in tr:
-        # print( t )
+    # test = ['perrito', 'asdasperrito asdasd perritadf', 'hamburguesaper']
+    # results = query.search( test, 'perrit[a,o]' )
+    # tr = query.raw_tree( url, auth )
+    # results = query.search( tr, 'data[_-]structures' )
+
+    generator = ['Python', 'C++', 'JavaScript']
+    results = query.search(generator, 'C++', options=['e'])
+    print ('Evaluated')
+    for t in results:
+        print( t )
