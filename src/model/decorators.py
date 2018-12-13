@@ -7,8 +7,16 @@ def get(query):
     def decorator_get(func):
         def wrapper_get(*args, **kwargs):
 
-            cursor.execute(query)
-            return func(*args, cursor.fetchall(), **kwargs)
+            if not kwargs.get('params', False):
+                cursor.execute(query)
+            else:
+                cursor.execute(query, kwargs.get('params'))
+
+            kwargs.update({
+                'result': cursor.fetchall()
+            })
+
+            return func(**kwargs)
 
         return wrapper_get
     return decorator_get
