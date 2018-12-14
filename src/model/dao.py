@@ -1,21 +1,19 @@
 
 from entity import Repository
-from decorators import get
+from decorators import query
 
 
 class RepositoryDao:
 
-    @classmethod
-    @get('SELECT * FROM repository')
+    @staticmethod
+    @query('SELECT * FROM repository')
     def getRepositories(**kwargs):
-        for repository in kwargs.get('result', []):
-            yield Repository(repository[0], repository[1])
+        return Repository.fromList(kwargs.get('result', []))
 
-    @classmethod
-    @get('SELECT * FROM repository WHERE user=?')
+    @staticmethod
+    @query('SELECT * FROM repository WHERE user=?')
     def getRepositoriesByUser(**kwargs):
-        for repository in kwargs.get('result', []):
-            yield Repository(repository[0], repository[1])
+        return Repository.fromList(kwargs.get('result', []))
 
 
 if __name__ == '__main__':

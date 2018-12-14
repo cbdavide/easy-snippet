@@ -4,15 +4,15 @@ connection = sqlite3.connect('data/database.db')
 cursor = connection.cursor()
 
 
-def get(query):
+def query(query_string):
 
-    def decorator_get(func):
-        def wrapper_get(*args, **kwargs):
+    def decorator_query(func):
+        def wrapper_query(*args, **kwargs):
 
             if not kwargs.get('params', False):
-                cursor.execute(query)
+                cursor.execute(query_string)
             else:
-                cursor.execute(query, kwargs.get('params'))
+                cursor.execute(query_string, kwargs.get('params'))
 
             kwargs.update({
                 'result': cursor.fetchall()
@@ -20,5 +20,5 @@ def get(query):
 
             return func(**kwargs)
 
-        return wrapper_get
-    return decorator_get
+        return wrapper_query
+    return decorator_query
